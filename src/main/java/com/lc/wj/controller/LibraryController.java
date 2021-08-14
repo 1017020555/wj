@@ -2,9 +2,13 @@ package com.lc.wj.controller;
 
 import com.lc.wj.pojo.Book;
 import com.lc.wj.service.BookService;
+import com.lc.wj.utils.UploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -54,5 +58,24 @@ public class LibraryController {
         }else {
             return bookService.search(keywords);
         }
+    }
+
+    @CrossOrigin
+    @PostMapping("api/covers")
+    public String upload(MultipartFile file){
+        try {
+            String folder = "D:/workspace/wj/img/";
+            File file1=new File(folder);
+            if (!file1.exists()) {
+                file1.mkdir();
+            }
+            file.transferTo(new File(folder,file.getOriginalFilename()));
+            String imgURL = "http://localhost:8843/api/file/" + file.getOriginalFilename();
+            return imgURL;
+        }catch (Exception e){
+            e.getMessage();
+            return "";
+        }
+
     }
 }
