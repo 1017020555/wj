@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BookDao extends JpaRepository<Book,Integer> {
     List<Book> findAllByCategory(Category category);
-    List<Book> findAllByTitleLikeAndAuthorLike(String title,String author);
+    List<Book> findAllByTitleLikeOrAuthorLike(String title,String author);
 }

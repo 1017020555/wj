@@ -3,8 +3,8 @@ package com.lc.wj.controller;
 import com.lc.wj.pojo.Book;
 import com.lc.wj.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -30,6 +30,7 @@ public class LibraryController {
     public Book findById(@PathVariable Integer id){
         return bookService.findById(id);
     }
+
     @PostMapping("/api/delete")
     public void delete(@RequestBody Book book) throws Exception {
         bookService.deleteById(book.getId());
@@ -45,4 +46,13 @@ public class LibraryController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/api/search")
+    public List<Book> search(@Param("keywords") String keywords){
+        if ("".equals(keywords)){
+            return bookService.list();
+        }else {
+            return bookService.search(keywords);
+        }
+    }
 }
