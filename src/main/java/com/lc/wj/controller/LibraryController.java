@@ -35,6 +35,7 @@ public class LibraryController {
         return bookService.findById(id);
     }
 
+    @CrossOrigin
     @PostMapping("/api/delete")
     public void delete(@RequestBody Book book) throws Exception {
         bookService.deleteById(book.getId());
